@@ -39,7 +39,8 @@ class RootWidget(MDBoxLayout):
 
     def on_kv_post(self, base_widget):
         app = MDApp.get_running_app()
-        Clock.schedule_once(lambda dt: app.set_default_values(), 0)
+        if app is not None:
+            Clock.schedule_once(lambda dt: app.set_default_values(), 0)
 
     def generiere_protokoll(self):
         # Get the data from the input fields
@@ -90,14 +91,23 @@ class RootWidget(MDBoxLayout):
             auswirkung = self.auswirkung.text
 
             # Validierung der Eingaben
-            if not MDApp.get_running_app().validate_inputs(datum, beginn, ende, grund, verursacher, auswirkung):
+            app = MDApp.get_running_app()
+            if app is None or not app.validate_inputs(datum, beginn, ende, grund, verursacher, auswirkung):
                 return
 
             # Daten in die Datenbank einfügen
             insert_laermdaten(datum, beginn, ende, grund, verursacher, auswirkung)
-            MDApp.get_running_app().show_message("Daten erfolgreich gespeichert!")
+            app_instance = MDApp.get_running_app()
+            if app_instance is not None:
+                app_instance.show_message("Daten erfolgreich gespeichert!")
+            else:
+                print("Daten erfolgreich gespeichert!")
         except Exception as e:
-            MDApp.get_running_app().show_message(f"Fehler: {e}")
+            app_instance = MDApp.get_running_app()
+            if app_instance is not None:
+                app_instance.show_message(f"Fehler: {e}")
+            else:
+                print(f"Fehler: {e}")
 
     def load_data(self):
         """Lädt die gespeicherten Daten aus der Datenbank."""
@@ -106,9 +116,17 @@ class RootWidget(MDBoxLayout):
             print("Gespeicherte Daten:")
             for entry in data:
                 print(entry)
-            MDApp.get_running_app().show_message("Daten erfolgreich geladen!")
+            app_instance = MDApp.get_running_app()
+            if app_instance is not None:
+                app_instance.show_message("Daten erfolgreich geladen!")
+            else:
+                print("Daten erfolgreich geladen!")
         except Exception as e:
-            MDApp.get_running_app().show_message(f"Fehler: {e}")
+            app_instance = MDApp.get_running_app()
+            if app_instance is not None:
+                app_instance.show_message(f"Fehler: {e}")
+            else:
+                print(f"Fehler: {e}")
 
 
 class ProtokollApp(MDApp):
@@ -255,7 +273,8 @@ class ProtokollApp(MDApp):
             self.show_message(f"Plot '{plot_file}' wurde nicht gefunden.")
 
         # Menü schließen
-        self.menu.dismiss()
+        if self.menu is not None:
+            self.menu.dismiss()
 
 
     def menu_open(self):
