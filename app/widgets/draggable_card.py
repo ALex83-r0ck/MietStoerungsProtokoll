@@ -3,6 +3,7 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.properties import BooleanProperty
 from kivymd.uix.card import MDCard
 from kivymd.app import MDApp
+import os
 
 class MyDraggableCard(MDCard):
     """
@@ -69,3 +70,5 @@ class MyDraggableCard(MDCard):
             self.dragging = False
             return True
         return super().on_touch_up(touch)
+    
+    

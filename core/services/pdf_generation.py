@@ -5,7 +5,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.utils import simpleSplit
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, PageBreak
 from datetime import date
-from utils.data_processing import get_all_data, get_all_massnahmen
+from core.services.data_processing import get_all_data, get_all_massnahmen
 import pandas as pd
 
 def generiere_protokoll(self, *args):
@@ -38,7 +38,7 @@ def generiere_protokoll(self, *args):
     # Beschreibung des Protokolls
     description = Paragraph(
         "Dieses Protokoll dokumentiert Lärmbelastungen im angegebenen Zeitraum. "
-        "Diese Daten bilden die Störungen in einer Skala von (1-5) ab. Die Dauer ist in Minuten(min).",
+        "Diese Daten bilden die Störungen in einer Skala von (3-5) ab. Die Dauer ist in Minuten(min).",
         body_style
     )
     elements.append(description)
@@ -94,8 +94,8 @@ def generiere_protokoll(self, *args):
         # Seitenzahl hinzufügen
         page_num = canvas.getPageNumber()
         text = f"Seite {page_num}"
-        canvas.setFont("Helvetica", 8)
-        canvas.drawString(530, 10, text)
+        canvas.setFont("Helvetica", 10)
+        canvas.drawString(530, 30, text)
 
     # Kopf- und Fußbereich
     elements.append(table)
@@ -104,7 +104,7 @@ def generiere_protokoll(self, *args):
     # Footer hinzufügen
     elements.append(Spacer(1, 40))
     footer = Paragraph(
-        "Lärmprotokoll",
+        "Lärmprotokoll - Generated with Protokoli der Protokollapp - Version 1.0 (2024) - © Alexander Rothe",
         ParagraphStyle(name='Footer', alignment=1, fontSize=10)
     )
     elements.append(footer)
@@ -145,7 +145,7 @@ def generiere_massnahmen(self, *args):
 
     # Beschreibung des Protokolls
     description = Paragraph(
-        "Dieses Protokoll dokumentiert die getroffenen Maßnahmen zur Lärmminderung und Störungsbeseitigung.",
+        "Dieses Protokoll dokumentiert die getroffenen Versuche zur selbständigen Lärm und Störungsbeseitigung.",
         body_style
     )
     elements.append(description)
@@ -214,15 +214,15 @@ def generiere_massnahmen(self, *args):
     def on_page(canvas, doc):
         page_num = canvas.getPageNumber()
         text = f"Seite {page_num}"
-        canvas.setFont("Helvetica", 8)
-        canvas.drawString(530, 10, text)
+        canvas.setFont("Helvetica", 10)
+        canvas.drawString(530, 30, text)
 
     # Tabelle hinzufügen
     elements.append(table)
 
     # Footer hinzufügen
     footer = Paragraph(
-        "Maßnahmenprotokoll - Generated with Protokoli der Protokollapp",
+        "Maßnahmenprotokoll - Generated with Protokoli der Protokollapp - Version 1.0 (2024) - © Alexander Rothe",
         ParagraphStyle(name='Footer', alignment=1, fontSize=10)
     )
     elements.append(Spacer(1, 20))

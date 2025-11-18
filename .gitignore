@@ -1,20 +1,30 @@
-test_protokoll.py
-data/logs/app.log
-test_protokoll.py
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Daten
+data/logs/*
+!data/logs/.gitkeep
 database/protokoll.db
-database/__pycache__/database_setup.cpython-310.pyc
-weekly_analysis.png
-verursacher_frequency.png
-durchschnittliche_auswirkungen.png
-.gitignore
-plot_auswirkung.png
-plot_dauer_histogram.png
-plot_dauer_trend.png
-Massnahmen_2024-12-17.pdf
-plot_forecast.png
-plot_wochenauswertung.png
-plot_hauptzeiten_nach_20.png
-plot_hauptzeiten.png
-plot_heatmap_zeit_tag.png
-Lärmprotokoll_vom_20-12-2024.pdf
-Massnahmen-Protokoll_vom_20-12-2024.pdf
+*.pdf
+*.docx
+
+# Build
+build/
+dist/
+*.spec
+
+# IDE
+.vscode/
+.idea/
+
+# Plots (außer gitkeep)
+plots/*
+!plots/.gitkeep
+# Snyk Security Extension - AI Rules (auto-generated)
+.github\instructions\snyk_rules.instructions.md
+
+# Snyk Security Extension - AI Rules (auto-generated)
+.cursor\rules\snyk_rules.mdc

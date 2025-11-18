@@ -1,0 +1,15 @@
+{
+  "version": "1.1.0",
+  "author": "Alexander Rothe",
+  "paths": {
+    "database": "database/protokoll.db",
+    "plots": "plots",
+    "reports": "data/reports",
+    "logs": "data/logs/app.log",
+    "images": "utils/image"
+  },
+  "app": {
+    "title": "Protolkoli",
+    "icon": "utils/image/Designer.png"
+  }
+}

@@ -1,0 +1,26 @@
+Kernfunktionen (Checkliste)
+
+Lärmereignisse erfassen (Datum, Uhrzeit, Art, Dauer, Notizen, etc.)
+
+Maßnahmen / Reaktionen erfassen
+
+Daten speichern in SQLite (lokal)
+
+Daten abrufen / durchsuchen / filtern => CRUD! Aktuell noch nicht implementiert
+
+PDF-Berichte generieren für:
+
+- Lärmprotokoll
+
+- Maßnahmen
+
+Grafiken / Plots erzeugen => sollten wir dynamisch erzeugen wie von dir vorgeschlagen.
+
+Logik in der GUI bedienen (Kivy, nehme ich an?) => ja kivy mit starken kivymd
+
+Reports/Plots im Dateisystem speichern => sollte eigentlich schon alles in einer Datenbank gespeichert sein
+
+Log-Funktion => müssen wir besser implementieren
+
+===========
+Im Service kannst du optional zusätzliche Checks machen, z.B. Plausibilität von Uhrzeiten oder Konflikte in DB.
