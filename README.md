@@ -1,112 +1,69 @@
-# 📝 Lärmprotokoll-App
+# MietStörungsProtokoll
 
-Diese **Lärmprotokoll-App** ermöglicht es, Lärmstörungen detailliert zu protokolieren und hilft somit beim Nachweis in rechtlichen Auseinandersetzungen oder bei Gesprächen mit Vermietern. Sie bietet eine einfache Benutzeroberfläche zur Eingabe und Anzeige von Störungen/Diagrammen und speichert alle Daten in einer SQLite-Datenbank. Auch ist eine automatische Protokoll (PDF) erstellung Implementiert.
+**Zeitgestempeltes Protokoll für alle Arten von Mietstörungen**  
+Lärm · Schimmel · Heizungsausfall · Nachbarschaftsstreit · defekte Gemeinschaftsanlagen · etc.
 
-## Projektbeschreibung: Lärmprotokoll-App
-### Hintergrund:
-In vielen **Mietverhältnissen** kann es zu wiederholtem Lärm und Störungen kommen, die sowohl das Wohlbefinden als auch die Lebensqualität beeinträchtigen. Oftmals bleibt die Kommunikation mit den Nachbarn oder der Hausverwaltung erfolglos. In solchen Fällen ist es wichtig, eine detaillierte und strukturierte Aufzeichnung der Lärmstörungen zu führen, um bei Bedarf auf konkrete Beweise zurückgreifen zu können.
-### Ziel:
-Diese App wird entwickelt, um ein benutzerfreundliches und effizientes Lärmprotokoll zu führen. Sie ermöglicht es, Lärmstörungen systematisch zu dokumentieren, die wichtigsten Daten wie Datum, Uhrzeit und Art der Störung festzuhalten und auf einfache Weise zu verwalten. Die gesammelten Informationen können später übersichtlich exportiert und als Nachweis genutzt werden.
-### Funktionen:
-- **Strukturierte Eingabe**: Der Benutzer kann wichtige Informationen wie Datum, Uhrzeit und Art des Lärms in übersichtlichen Feldern eingeben.
-  
-- **Interaktive Benutzeroberfläche**: Das Design der App ermöglicht eine einfache Bedienung durch die Nutzung von verschiebbaren Karten, die unterschiedliche Abschnitte des Protokolls enthalten.
+Desktop-App · Python + Kivy/KivyMD · 100 % offline-fähig · Open Source
 
-- **PDF-Export**: Einmal erfasste Protokolle können als PDF-Datei erstellt werden, um sie zu speichern oder an relevante Stellen weiterzuleiten.
+## Warum dieses Projekt existiert
 
-- **Flexibles Layout**: Der Benutzer kann die Ansicht nach seinen Bedürfnissen anpassen, sodass er das Protokoll effizient führen kann.
-### Zielgruppe:
-Diese App richtet sich an **Mieter**, die regelmäßig Lärmstörungen erleben und eine strukturierte Möglichkeit suchen, diese zu dokumentieren. Sie ist ebenfalls nützlich für Personen, die **rechtliche Schritte gegen ihre Nachbarn oder Vermieter einleiten möchten und auf eine solide Dokumentation angewiesen sind**.
-### Zukunftsperspektiven:
-Die App ist derzeit als Desktop-Version in Entwicklung. In der Zukunft ist geplant, auch eine mobile Version zu entwickeln, die eine noch flexiblere Nutzung ermöglicht. Das Projekt soll ständig erweitert und verbessert werden, um weitere Funktionen hinzuzufügen und die Benutzerfreundlichkeit zu optimieren.
-### Warum GitHub? Und warum das als erstes großes Projekt?
-Ich teile dieses Projekt auf GitHub, um es mit anderen zu teilen, die möglicherweise ähnliche Herausforderungen haben und diese Lösung ebenfalls nutzen oder weiterentwickeln möchten. GitHub bietet eine großartige Möglichkeit für Feedback, Zusammenarbeit und Weiterentwicklung der App. Es ist auch eine Plattform, die eine kontinuierliche Verbesserung des Codes und die Dokumentation des Entwicklungsprozesses ermöglicht.
-Zudem bin gerade selber in so einer Situation deswegen der Entschluss hierzu.
+Ich bin selbst Mieter und steckte mitten in einem richtig nervigen Lärmstreit mit den Mietern über uns. Gleichzeitig gab es auch mit unserer Vermieterin immer wieder Situationen, bei denen man sich hinterher wünscht, **alles** lückenlos und zeitgestempelt dokumentiert zu haben.
 
-## 🚀 Features
+Excel-Tabellen sind umständlich, handschriftliche Zettel mit meiner Sauklaue hätten vor Gericht sicher kein Gewicht – und fertige Vorlagen kosten Geld oder Nerven.
 
-- 📅 **Verschiebbare Cards und Diagrame** 
-- 📅 **Erfassung von Lärmdaten** (Datum, Beginn, Ende, Dauer)
-- 📊 **Analyse und Ausgabe mit Digrammen**
-- 💾 **Speicherung der Daten** in einer SQLite-Datenbank
-- 🔄 **Automatische Berechnung der Störungsdauer**
-- ⚙️ **Einfache Benutzeroberfläche** mit Kivy & Kivymd
-- 🛠️ **Möglichkeit, die Datenbank zu manipulieren** Einträge löschen, abändern, durchsuchen
-- 🖥️ **Benutzerfreundlichkeit**
+Deshalb habe ich dieses Tool gebaut.  
+Ähnliches habe ich weder im App-Store noch als Open-Source-Projekt gefunden.
 
-## 📋 Installation
+## Was die App leistet
 
-## 1. Repository klonen
+Sie erstellt **zeitgestempelte, übersichtliche Protokolle – genau in der Form, wie Mietervereine und Gerichte sie als privates Beweismittel akzeptieren und empfehlen**.
 
-Code kopieren:
+## Features
 
-```bash
-git clone git@github.com:ALex83-r0ck/Protolkoli.git
-```
+| Status       | Funktion                                           |
+|--------------|----------------------------------------------------|
+| Done         | Zeitgestempelte Einträge mit freier Beschreibung   |
+| Done         | Automatischer PDF-Export (klar strukturiert)        |
+| Done         | Statistiken + Diagramme (Matplotlib)               |
+| In Arbeit    | Erweiterung auf alle Störungsarten (Schimmel, Heizung, Nachbarn …) |
+| In Arbeit    | Foto-Anhänge direkt im Eintrag                     |
+| Geplant      | Fristenrechner & Erinnerungen                      |
+| Geplant      | Vorlagen für Schreiben an Vermieter/Mieterverein   |
 
-## 2. Virtuelle Umgebung einrichten
+## Aktueller Stand – November 2025
 
-Erstelle und aktiviere eine virtuelle Umgebung:
+Anfang war das ein klassisches „schnell mit KI zusammengeschustertes“ Hobby-Projekt (da auch schnell eine Lösung her musste).  
+Seit November 2025 wird alles komplett neu und professionell aufgesetzt:
+
+- Der ganze alte Code liegt offen im Ordner `/legacy` (Transparenz statt verstecken)
+- Root ist sauber, moderne `pyproject.toml` + ruff + black + mypy (strict)
+- Ziel: Clean-ish Architecture, ≥ 95 % Testabdeckung, SQLModel + Alembic
+- Jeder Refactoring-Schritt ist im Commit-History nachvollziehbar
+
+## Installation (noch Legacy-Version)
 
 ```bash
-git clone https://github.com/ALex83-r0ck/Protolkoli.git
-cd Protolkoli
+git clone https://github.com/ALex83-r0ck/MietStoerungsProtokoll.git
+cd MietStoerungsProtokoll
 python -m venv .venv
 .\.venv\Scripts\activate
 pip install -r requirements.txt
-python protokoll.py
+python legacy/app/main.py
 ```
 
-## 👨‍💻 Nutzung
+Die neue saubere Version kommt Schritt für Schritt in den nächsten Wochen.
 
-Nach dem Start der App kannst du:
+## Tech-Stack (Ziel)
 
-Lärmdaten mit den folgenden Informationen erfassen:
+Python 3.13 · Kivy/KivyMD · SQLModel + Alembic · Pydantic v2
+pytest + Coverage ≥ 95 % · ruff, black, mypy (strict)
 
-- Datum der Störung
-- Beginn und Ende der Störung
-- Störungsgrund
-- Verursacher (z.B. Nachbar)
-- Auswirkungen der Störung (Bewertung von 1 bis 5)
+## Mitmachen?
 
-Die Daten werden in einer SQLite-Datenbank gespeichert und sind leicht abrufbar.
+Wer Lust hat – ob Debugging, neue Features, bessere Oberfläche oder einfach nur Feedback – ist herzlich willkommen.  
 
-## 🛠️ Technologien
+📧 **<rothe_alexander@t-online.de>**
 
-***Kivy/Kivymd***: Für die Erstellung der grafischen Benutzeroberfläche
+Danke, für euer Interesse und das durchhalten.
 
-***SQLite***: Datenbank zur Speicherung der Störungen
-
-***Python***: Hauptsprache des Projekts
-
-***Pandas***: Zum analysieren der Daten
-
-***Matplotlib***: Zum erstellen der Charts
-
-## 🤝 Beitrag
-
-Beiträge sind willkommen! Wenn du neue Features oder Verbesserungen hast, fork das Repository und schick einen Pull-Request.
-Achte darauf, die bestehenden Code-Konventionen zu befolgen und Tests für neue Features zu schreiben.
-
-## Schritte zum Beitrag
-
-- Forke das Repository
-- Erstelle einen Branch (git checkout -b feature-xyz)
-- Implementiere die Änderungen
-- Teste deine Änderungen
-- Schicke einen Pull-Request an den main-Branch
-
-## 📄 Lizenz
-
-Dieses Projekt ist unter der MIT-Lizenz lizenziert. Weitere Details findest du in der LICENSE-Datei.
-
-## 🖼️ Screenshots
-
-Hier ist ein Beispiel, wie die Benutzeroberfläche aussieht:
-
-![NewLayout](https://github.com/user-attachments/assets/ff4416e3-a960-4c64-a0e3-e8ecb8b38a53)
-![Unbenannt1](https://github.com/user-attachments/assets/fd72d292-4241-41b5-9580-51c048590a4e)
-
-## 📝 To-Do's
-
-- [ ] Layout verbessern
+Falls ihr selbst gerade Lärm, Schimmel oder ähnlichen Ärger habt – viel Kraft, und vielleicht hilft euch das Tool ein Stück weiter.
