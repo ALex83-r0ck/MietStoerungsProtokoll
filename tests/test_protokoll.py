@@ -1,10 +1,11 @@
-from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.graphics.texture import Texture
-from kivy.graphics import Rectangle
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_agg import FigureCanvasAgg
 import numpy as np
+from kivy.app import App
+from kivy.graphics import Rectangle
+from kivy.graphics.texture import Texture
+from kivy.uix.widget import Widget
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+from matplotlib.figure import Figure
+
 
 class PlotWidget(Widget):
     def __init__(self, **kwargs):
@@ -23,9 +24,11 @@ class PlotWidget(Widget):
             return
 
         # Initialisierung der Textur bei Größenänderung
-        if not self.texture:  
+        if not self.texture:
             print("Initializing texture for the first time")
-            self.texture = Texture.create(size=(int(self.size[0]), int(self.size[1])), colorfmt='rgba')
+            self.texture = Texture.create(
+                size=(int(self.size[0]), int(self.size[1])), colorfmt="rgba"
+            )
 
         # Matplotlib-Plot aktualisieren
         self.update_plot()
@@ -43,15 +46,17 @@ class PlotWidget(Widget):
         buf = np.frombuffer(self.canvas_agg.buffer_rgba(), dtype=np.uint8)
         buf = buf.reshape(self.canvas_agg.get_width_height()[::-1] + (4,))
 
-        self.texture.blit_buffer(buf.flatten(), colorfmt='rgba', bufferfmt='ubyte')
+        self.texture.blit_buffer(buf.flatten(), colorfmt="rgba", bufferfmt="ubyte")
 
         with self.canvas:
             self.canvas.clear()
             Rectangle(texture=self.texture, pos=self.pos, size=self.size)
 
+
 class MyApp(App):
     def build(self):
         return PlotWidget()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     MyApp().run()

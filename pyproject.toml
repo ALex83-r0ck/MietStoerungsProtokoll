@@ -1,0 +1,22 @@
+[project]
+name = "mietstoerungsprotokoll"
+version = "0.1.0"
+description = "Rechtssicheres Protokoll für Mieter - Lärm, Schimmel, Heizungsausfall usw."
+authors = [{name = "Alexander Rothe", email = "rothe_alexander@t-online.de"}]
+requires-python = ">=3.13"
+
+[tool.ruff]
+lint.select = ["E", "F", "B", "I", "W"]
+lint.ignore = []
+line-length = 100
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

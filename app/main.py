@@ -6,20 +6,32 @@
 Main GUI.
 Alle Datenoperationen gehen über Services.
 """
+import json
+import logging
+import os
+import re
+from datetime import datetime
+
+# === kv ===
+from pathlib import Path
 from typing import Optional
+
 from kivy.clock import Clock
-from kivy.properties import ObjectProperty
 from kivy.lang import Builder
+from kivy.properties import ObjectProperty
 from kivymd.app import MDApp
-from kivymd.uix.snackbar import MDSnackbar
 from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.snackbar import MDSnackbar
+
 from core.services import protokol_service, statistics_service
 from core.services.data_processing import generate_plots
-from core.services.pdf_generation import generiere_protokoll, generiere_massnahmen
-from infrastructure.database.database_setup import create_database, get_all_massnahmen, get_all_laermdaten
-from app.widgets.draggable_card import MyDraggableCard 
-from datetime import datetime
-import json, os, logging, re
+from infrastructure.database.database_setup import (
+    create_database,
+    get_all_laermdaten,
+)
+
+KV_FILE = Path(__file__).parent / "kv" / "protokoll.kv"
+Builder.load_file(str(KV_FILE))
 
 # === CONFIG ===
 with open("config.json", "r", encoding="utf-8") as f:
@@ -32,13 +44,15 @@ logging.basicConfig(
     level=logging.INFO,
     filename=CONFIG["paths"]["logs"],
     format="%(asctime)s - %(levelname)s - %(message)s",
-    encoding="utf-8"
+    encoding="utf-8",
 )
 
-os.environ['KIVY_NO_CONSOLELOG'] = '1'
+os.environ["KIVY_NO_CONSOLELOG"] = "1"
+
 
 class RootWidget(MDBoxLayout):
     """GUI-Logik"""
+
     plot_menu_button = ObjectProperty(None)
     chart_box = ObjectProperty(None)
     datum = ObjectProperty(None)
@@ -67,8 +81,12 @@ class RootWidget(MDBoxLayout):
             return
         try:
             protokol_service.save_event(
-                self.datum.text, self.beginn.text, self.ende.text,
-                self.grund.text, self.verursacher.text, int(self.auswirkung.text)
+                self.datum.text,
+                self.beginn.text,
+                self.ende.text,
+                self.grund.text,
+                self.verursacher.text,
+                int(self.auswirkung.text),
             )
             self.show_message("Daten gespeichert!")
             self.update_plots()
@@ -96,7 +114,7 @@ class RootWidget(MDBoxLayout):
         if self.beginn.text >= self.ende.text:
             self.show_message("Beginn muss vor Ende sein!")
             return False
-        if not all(getattr(self, f).text for f in ["grund","verursacher","auswirkung"]):
+        if not all(getattr(self, f).text for f in ["grund", "verursacher", "auswirkung"]):
             self.show_message("Alle Felder ausfüllen!")
             return False
         try:
@@ -140,15 +158,30 @@ class RootWidget(MDBoxLayout):
     def create_plot_menu(self):
         """Dropdown Menü der Plots erstellen"""
         from kivymd.uix.menu import MDDropdownMenu
+
         items = []
-        plot_files = ["01_trend_dauer.png","02_histogramm_dauer.png","03_top_stoerungen.png","04_uhrzeiten.png","05_prognose.png"]
+        plot_files = [
+            "01_trend_dauer.png",
+            "02_histogramm_dauer.png",
+            "03_top_stoerungen.png",
+            "04_uhrzeiten.png",
+            "05_prognose.png",
+        ]
         for f in plot_files:
             path = os.path.join(PLOT_FOLDER, f)
             if os.path.exists(path):
-                items.append({"viewclass":"OneLineListItem",
-                              "text":f.split("_",1)[1].replace(".png","").replace("_"," ").title(),
-                              "on_release": lambda x=f: self.show_plot(x)})
-        self.menu = MDDropdownMenu(caller=self.ids.top_app_bar, items=items or [{"text":"Keine Plots verfügbar"}], width_mult=4)
+                items.append(
+                    {
+                        "viewclass": "OneLineListItem",
+                        "text": f.split("_", 1)[1].replace(".png", "").replace("_", " ").title(),
+                        "on_release": lambda x=f: self.show_plot(x),
+                    }
+                )
+        self.menu = MDDropdownMenu(
+            caller=self.ids.top_app_bar,
+            items=items or [{"text": "Keine Plots verfügbar"}],
+            width_mult=4,
+        )
 
     def show_plot(self, filename):
         path = os.path.join(PLOT_FOLDER, filename)
@@ -156,6 +189,7 @@ class RootWidget(MDBoxLayout):
             self.show_message("Plot nicht gefunden")
             return
         from kivymd.uix.fitimage import FitImage
+
         self.chart_box.clear_widgets()
         self.chart_box.add_widget(FitImage(source=path, allow_stretch=True))
         self.show_message(f"{filename} geladen")
@@ -174,6 +208,7 @@ class RootWidget(MDBoxLayout):
         except Exception as e:
             self.show_message(f"Plot-Update fehlgeschlagen: {e}")
             logging.error(f"Plot-Update Fehler: {e}")
+
 
 # =====================
 # === App-Klasse ===
@@ -195,9 +230,10 @@ class ProtokollApp(MDApp):
         now = datetime.now()
         date_str = now.strftime("%d-%m-%Y")
         time_str = now.strftime("%H:%M")
-        for field in ["datum","beginn","ende"]:
+        for field in ["datum", "beginn", "ende"]:
             if hasattr(self.root, field):
-                getattr(self.root, field).text = date_str if field=="datum" else time_str
+                getattr(self.root, field).text = date_str if field == "datum" else time_str
+
 
 if __name__ == "__main__":
     try:

@@ -1,44 +1,52 @@
-# Protolkoli – Dein Lärmprotokoll. Gerichtsfest. Automatisch. Kostenlos.
+# 📝 Lärmprotokoll-App
 
-> **„Ich habe 2 Jahre gelitten. Jetzt habe ich Beweise.“**  
-> — Alexander Rothe, Entwickler & Betroffener
+Diese **Lärmprotokoll-App** ermöglicht es, Lärmstörungen detailliert zu protokolieren und hilft somit beim Nachweis in rechtlichen Auseinandersetzungen oder bei Gesprächen mit Vermietern. Sie bietet eine einfache Benutzeroberfläche zur Eingabe und Anzeige von Störungen/Diagrammen und speichert alle Daten in einer SQLite-Datenbank. Auch ist eine automatische Protokoll (PDF) erstellung Implementiert.
 
-[![Stars](https://img.shields.io/github/stars/ALex83-r0ck/Protolkoli?style=social)](https://github.com/ALex83-r0ck/Protolkoli)
-[![Downloads](https://img.shields.io/github/downloads/ALex83-r0ck/Protolkoli/total)](https://github.com/ALex83-r0ck/Protolkoli/releases)
-[![License](https://img.shields.io/github/license/ALex83-r0ck/Protolkoli)](LICENSE)
+## Projektbeschreibung: Lärmprotokoll-App
+### Hintergrund:
+In vielen **Mietverhältnissen** kann es zu wiederholtem Lärm und Störungen kommen, die sowohl das Wohlbefinden als auch die Lebensqualität beeinträchtigen. Oftmals bleibt die Kommunikation mit den Nachbarn oder der Hausverwaltung erfolglos. In solchen Fällen ist es wichtig, eine detaillierte und strukturierte Aufzeichnung der Lärmstörungen zu führen, um bei Bedarf auf konkrete Beweise zurückgreifen zu können.
+### Ziel:
+Diese App wird entwickelt, um ein benutzerfreundliches und effizientes Lärmprotokoll zu führen. Sie ermöglicht es, Lärmstörungen systematisch zu dokumentieren, die wichtigsten Daten wie Datum, Uhrzeit und Art der Störung festzuhalten und auf einfache Weise zu verwalten. Die gesammelten Informationen können später übersichtlich exportiert und als Nachweis genutzt werden.
+### Funktionen:
+- **Strukturierte Eingabe**: Der Benutzer kann wichtige Informationen wie Datum, Uhrzeit und Art des Lärms in übersichtlichen Feldern eingeben.
+  
+- **Interaktive Benutzeroberfläche**: Das Design der App ermöglicht eine einfache Bedienung durch die Nutzung von verschiebbaren Karten, die unterschiedliche Abschnitte des Protokolls enthalten.
 
-<img src="https://github.com/user-attachments/assets/ff4416e3-a960-4c64-a0e3-e8ecb8b38a53" width="100%">
+- **PDF-Export**: Einmal erfasste Protokolle können als PDF-Datei erstellt werden, um sie zu speichern oder an relevante Stellen weiterzuleiten.
 
----
+- **Flexibles Layout**: Der Benutzer kann die Ansicht nach seinen Bedürfnissen anpassen, sodass er das Protokoll effizient führen kann.
+### Zielgruppe:
+Diese App richtet sich an **Mieter**, die regelmäßig Lärmstörungen erleben und eine strukturierte Möglichkeit suchen, diese zu dokumentieren. Sie ist ebenfalls nützlich für Personen, die **rechtliche Schritte gegen ihre Nachbarn oder Vermieter einleiten möchten und auf eine solide Dokumentation angewiesen sind**.
+### Zukunftsperspektiven:
+Die App ist derzeit als Desktop-Version in Entwicklung. In der Zukunft ist geplant, auch eine mobile Version zu entwickeln, die eine noch flexiblere Nutzung ermöglicht. Das Projekt soll ständig erweitert und verbessert werden, um weitere Funktionen hinzuzufügen und die Benutzerfreundlichkeit zu optimieren.
+### Warum GitHub? Und warum das als erstes großes Projekt?
+Ich teile dieses Projekt auf GitHub, um es mit anderen zu teilen, die möglicherweise ähnliche Herausforderungen haben und diese Lösung ebenfalls nutzen oder weiterentwickeln möchten. GitHub bietet eine großartige Möglichkeit für Feedback, Zusammenarbeit und Weiterentwicklung der App. Es ist auch eine Plattform, die eine kontinuierliche Verbesserung des Codes und die Dokumentation des Entwicklungsprozesses ermöglicht.
+Zudem bin gerade selber in so einer Situation deswegen der Entschluss hierzu.
 
-## Warum diese App existiert
+## 🚀 Features
 
-Ich habe **2 Jahre unter Dauerlärm gelitten**.  
-- Nachbarn über mir: Trampeln, Klavier, Geschrei  
-- Vermieter: „Kann ich nichts machen“  
-- Polizei: „Kein Notfall“  
+- 📅 **Verschiebbare Cards und Diagrame** 
+- 📅 **Erfassung von Lärmdaten** (Datum, Beginn, Ende, Dauer)
+- 📊 **Analyse und Ausgabe mit Digrammen**
+- 💾 **Speicherung der Daten** in einer SQLite-Datenbank
+- 🔄 **Automatische Berechnung der Störungsdauer**
+- ⚙️ **Einfache Benutzeroberfläche** mit Kivy & Kivymd
+- 🛠️ **Möglichkeit, die Datenbank zu manipulieren** Einträge löschen, abändern, durchsuchen
+- 🖥️ **Benutzerfreundlichkeit**
 
-Ich habe **alles dokumentiert**. Mit Stift. Auf Papier.  
-→ **Verloren nach 2 Monaten**
+## 📋 Installation
 
-**Protolkoli ist die App, die ich damals gebraucht hätte.**
+## 1. Repository klonen
 
----
+Code kopieren:
 
-## Features, die dich retten werden
+```bash
+git clone git@github.com:ALex83-r0ck/Protolkoli.git
+```
 
-| Feature                        | Status | Beweis |
-|-------------------------------|--------|------|
-| Lärm in 10 Sekunden erfassen   | Done   | Draggable Cards |
-| Automatische Dauerberechnung   | Done   | SQLite Trigger |
-| **Gerichtsfeste PDF-Protokolle** | Done   | `Lärmprotokoll_vom_07-11-2025.pdf` |
-| **15 Analysen + Prognose**     | Done   | Heatmap, Trend, KI-Vorhersage |
-| 100% Offline + lokal          | Done   | Kein Cloud-Zwang |
-| Datenbank-Migration            | Done   | Alte Daten werden übernommen |
+## 2. Virtuelle Umgebung einrichten
 
----
-
-## Installation (2 Minuten)
+Erstelle und aktiviere eine virtuelle Umgebung:
 
 ```bash
 git clone https://github.com/ALex83-r0ck/Protolkoli.git
@@ -47,48 +55,58 @@ python -m venv .venv
 .\.venv\Scripts\activate
 pip install -r requirements.txt
 python protokoll.py
-```bash
+```
 
-In 30 Sekunden loslegen
+## 👨‍💻 Nutzung
 
-App starten
-Lärm eintragen (Datum, Zeit, „Trampeln“, „Nachbar oben“, 4)
-Klick auf PDF → fertig!
-An Vermieter schicken → Schweigen
+Nach dem Start der App kannst du:
 
+Lärmdaten mit den folgenden Informationen erfassen:
 
-Projektstruktur (Profi-Level)
-textProtolkoli/
-├── database/          → Migrationen, Trigger, Setup
-├── utils/             → Plots, PDFs, Bilder
-├── custom_widget/     → Draggable Cards
-├── data/reports/      → Deine Beweise
-├── plots/             → 15 Analysen
-└── tests/             → Ja, ich habe Tests
+- Datum der Störung
+- Beginn und Ende der Störung
+- Störungsgrund
+- Verursacher (z.B. Nachbar)
+- Auswirkungen der Störung (Bewertung von 1 bis 5)
 
-Kommende Features (Hilf mit!)
+Die Daten werden in einer SQLite-Datenbank gespeichert und sind leicht abrufbar.
 
- Android APK (Buildozer)
- Mikrofon-Integration (Decibel-Messung)
- Verschlüsselter Cloud-Sync
- Anwalt-Vorlage als Word
- Dark Mode
+## 🛠️ Technologien
 
+***Kivy/Kivymd***: Für die Erstellung der grafischen Benutzeroberfläche
 
-Mitmachen? Unbedingt!
-bashgit checkout -b feature/dein-name
-# z.B. "fix: dark mode"
-git push origin feature/dein-name
-Jeder PR wird persönlich gedankt – mit Name im CONTRIBUTORS.md!
+***SQLite***: Datenbank zur Speicherung der Störungen
 
-Lizenz
-MIT – Mach damit, was du willst.
-Aber wenn du jemanden rettest, schick mir eine DM. Das ist alles, was ich will.
+***Python***: Hauptsprache des Projekts
 
-Protolkoli – Weil Lärm kein Schicksal ist.
-Made with ❤️ and too much coffee
-Alexander Rothe – angehender FIAE
-GitHub: @ALex83-r0ck
-E-Mail: alexander.rothe@t-online.de
+***Pandas***: Zum analysieren der Daten
 
-„Das beste Projekt entsteht aus dem größten Schmerz.“
+***Matplotlib***: Zum erstellen der Charts
+
+## 🤝 Beitrag
+
+Beiträge sind willkommen! Wenn du neue Features oder Verbesserungen hast, fork das Repository und schick einen Pull-Request.
+Achte darauf, die bestehenden Code-Konventionen zu befolgen und Tests für neue Features zu schreiben.
+
+## Schritte zum Beitrag
+
+- Forke das Repository
+- Erstelle einen Branch (git checkout -b feature-xyz)
+- Implementiere die Änderungen
+- Teste deine Änderungen
+- Schicke einen Pull-Request an den main-Branch
+
+## 📄 Lizenz
+
+Dieses Projekt ist unter der MIT-Lizenz lizenziert. Weitere Details findest du in der LICENSE-Datei.
+
+## 🖼️ Screenshots
+
+Hier ist ein Beispiel, wie die Benutzeroberfläche aussieht:
+
+![NewLayout](https://github.com/user-attachments/assets/ff4416e3-a960-4c64-a0e3-e8ecb8b38a53)
+![Unbenannt1](https://github.com/user-attachments/assets/fd72d292-4241-41b5-9580-51c048590a4e)
+
+## 📝 To-Do's
+
+- [ ] Layout verbessern

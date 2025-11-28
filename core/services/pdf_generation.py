@@ -1,12 +1,22 @@
-from email.errors import FirstHeaderLineIsContinuationDefect
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.utils import simpleSplit
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, PageBreak
 from datetime import date
-from core.services.data_processing import get_all_data, get_all_massnahmen
+
 import pandas as pd
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.lib.utils import simpleSplit
+from reportlab.platypus import (
+    Image,
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
+
+from core.services.data_processing import get_all_data, get_all_massnahmen
+
 
 def generiere_protokoll(self, *args):
     # Daten laden
@@ -18,8 +28,8 @@ def generiere_protokoll(self, *args):
 
     # Styles und Logo
     styles = getSampleStyleSheet()
-    title_style = styles['Heading1']
-    body_style = styles['BodyText']
+    title_style = styles["Heading1"]
+    body_style = styles["BodyText"]
 
     logo_path = "utils/image/Designer.png"
     try:
@@ -30,7 +40,9 @@ def generiere_protokoll(self, *args):
 
     # Titel und Datum hinzufügen
     title = Paragraph("Lärmprotokoll", title_style)
-    date_paragraph = Paragraph(f"<b>Erstellt am:</b> {date.today().strftime('%d.%m.%Y')}", body_style)
+    date_paragraph = Paragraph(
+        f"<b>Erstellt am:</b> {date.today().strftime('%d.%m.%Y')}", body_style
+    )
     elements.append(title)
     elements.append(date_paragraph)
     elements.append(Spacer(1, 20))
@@ -39,7 +51,7 @@ def generiere_protokoll(self, *args):
     description = Paragraph(
         "Dieses Protokoll dokumentiert Lärmbelastungen im angegebenen Zeitraum. "
         "Diese Daten bilden die Störungen in einer Skala von (3-5) ab. Die Dauer ist in Minuten(min).",
-        body_style
+        body_style,
     )
     elements.append(description)
     elements.append(Spacer(1, 20))
@@ -47,17 +59,17 @@ def generiere_protokoll(self, *args):
     # Tabellendaten vorbereiten (Spaltenüberschriften und Daten)
     if not data.empty:
         # Entfernen der ID-Spalte
-        data = data.drop(columns=['id'], errors='ignore')
-        
+        data = data.drop(columns=["id"], errors="ignore")
+
         # Datum im richtigen Format ändern
-        data['datum'] = pd.to_datetime(data['datum']).dt.strftime('%d.%m.%Y')
-        
+        data["datum"] = pd.to_datetime(data["datum"]).dt.strftime("%d.%m.%Y")
+
         # Uhrzeit im Format HH:MM ändern (z.B., 20:08 statt 20:08:00)
-        data['beginn'] = pd.to_datetime(data['beginn']).dt.strftime('%H:%M')
-        data['ende'] = pd.to_datetime(data['ende']).dt.strftime('%H:%M')
+        data["beginn"] = pd.to_datetime(data["beginn"]).dt.strftime("%H:%M")
+        data["ende"] = pd.to_datetime(data["ende"]).dt.strftime("%H:%M")
 
         # Umbenennung von 'grund' auf 'Art der Störung'
-        data = data.rename(columns={'grund': 'Art der Störung'})
+        data = data.rename(columns={"grund": "Art der Störung"})
 
         # Spaltenüberschrift in Großbuchstaben
         column_headers = [col.capitalize() for col in data.columns]
@@ -73,21 +85,29 @@ def generiere_protokoll(self, *args):
     # Berechnung der Spaltenbreiten basierend auf der maximalen Textlänge
     col_widths = []
     for i in range(len(table_data[0])):
-        max_len = max([len(str(row[i])) for row in table_data])  # Maximale Länge der Zellen in der Spalte
-        col_widths.append(max_len * 6)  # Multiplizieren mit einem Faktor (z.B., 6) für bessere Sichtbarkeit
+        max_len = max(
+            [len(str(row[i])) for row in table_data]
+        )  # Maximale Länge der Zellen in der Spalte
+        col_widths.append(
+            max_len * 6
+        )  # Multiplizieren mit einem Faktor (z.B., 6) für bessere Sichtbarkeit
 
     # Tabelle formatieren
     table = Table(table_data, colWidths=col_widths, rowHeights=30, repeatRows=1)
-    table.setStyle(TableStyle([
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.black),
-        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-        ('BACKGROUND', (0, 0), (-1, 0), colors.lightblue),  # Überschriften grau hinterlegen
-        ('WORDWRAP', (0, 0), (-1, -1), True),  # Umbruch des Textes
-    ]))
+    table.setStyle(
+        TableStyle(
+            [
+                ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
+                ("FONTNAME", (0, 0), (-1, -1), "Helvetica"),
+                ("FONTSIZE", (0, 0), (-1, -1), 10),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+                ("BACKGROUND", (0, 0), (-1, 0), colors.lightblue),  # Überschriften grau hinterlegen
+                ("WORDWRAP", (0, 0), (-1, -1), True),  # Umbruch des Textes
+            ]
+        )
+    )
 
     # Funktion, um die Seitenzahl hinzuzufügen und die Tabelle richtig anzuordnen
     def on_page(canvas, doc):
@@ -105,29 +125,32 @@ def generiere_protokoll(self, *args):
     elements.append(Spacer(1, 40))
     footer = Paragraph(
         "Lärmprotokoll - Generated with Protokoli der Protokollapp - Version 1.0 (2024) - © Alexander Rothe",
-        ParagraphStyle(name='Footer', alignment=1, fontSize=10)
+        ParagraphStyle(name="Footer", alignment=1, fontSize=10),
     )
     elements.append(footer)
 
     # PDF erstellen
     doc.build(elements, onFirstPage=on_page, onLaterPages=on_page)
 
+
 def generiere_massnahmen(self, *args):
     # Daten für Maßnahmen holen
     data = get_all_massnahmen()  # Holt die Daten der Maßnahmen
-    
+
     # Umwandeln in DataFrame, um die Daten einfacher zu bearbeiten
-    df = pd.DataFrame(data, columns=['Datum', 'Maßnahme', 'Ergebnis'])
-    
+    df = pd.DataFrame(data, columns=["Datum", "Maßnahme", "Ergebnis"])
+
     # Dokument Setup
-    filename = f"Massnahmen-Protokoll_vom_{date.today().strftime('%d-%m-%Y')}.pdf"  # Dynamischer Dateiname
+    filename = (
+        f"Massnahmen-Protokoll_vom_{date.today().strftime('%d-%m-%Y')}.pdf"  # Dynamischer Dateiname
+    )
     doc = SimpleDocTemplate(filename, pagesize=A4)
     elements = []
 
     # Styles und Logo
     styles = getSampleStyleSheet()
-    title_style = styles['Heading1']
-    body_style = styles['BodyText']
+    title_style = styles["Heading1"]
+    body_style = styles["BodyText"]
 
     logo_path = "utils/image/Designer.png"
     try:
@@ -138,7 +161,9 @@ def generiere_massnahmen(self, *args):
 
     # Titel und Datum hinzufügen
     title = Paragraph("Maßnahmenprotokoll", title_style)
-    date_paragraph = Paragraph(f"<b>Erstellt am:</b> {date.today().strftime('%d.%m.%Y')}", body_style)
+    date_paragraph = Paragraph(
+        f"<b>Erstellt am:</b> {date.today().strftime('%d.%m.%Y')}", body_style
+    )
     elements.append(title)
     elements.append(date_paragraph)
     elements.append(Spacer(1, 20))
@@ -146,7 +171,7 @@ def generiere_massnahmen(self, *args):
     # Beschreibung des Protokolls
     description = Paragraph(
         "Dieses Protokoll dokumentiert die getroffenen Versuche zur selbständigen Lärm und Störungsbeseitigung.",
-        body_style
+        body_style,
     )
     elements.append(description)
     elements.append(Spacer(1, 20))
@@ -154,7 +179,7 @@ def generiere_massnahmen(self, *args):
     # Tabellendaten vorbereiten
     if not df.empty:
         # **Datum direkt als String belassen**:
-        df['Datum'] = df['Datum'].astype(str)
+        df["Datum"] = df["Datum"].astype(str)
 
         # Spaltenüberschriften
         column_headers = [col.capitalize() for col in df.columns]
@@ -168,7 +193,7 @@ def generiere_massnahmen(self, *args):
             max_lines = 1  # Zählt die maximalen Zeilen einer Zelle in der Reihe
             for i, cell in enumerate(row):
                 # Text auf die maximale Spaltenbreite umbrechen
-                wrapped_text = "\n".join(simpleSplit(str(cell), 'Helvetica', 10, max_widths[i]))
+                wrapped_text = "\n".join(simpleSplit(str(cell), "Helvetica", 10, max_widths[i]))
                 wrapped_row.append(wrapped_text)
                 # Anzahl der Zeilen berechnen und Höchstenwert speichern
                 max_lines = max(max_lines, len(wrapped_text.split("\n")))
@@ -193,22 +218,26 @@ def generiere_massnahmen(self, *args):
         max_lines = 1  # Minimale Anzahl von Zeilen
         for i, cell in enumerate(row):
             # Text umbrechen, um die maximale Spaltenbreite zu berücksichtigen
-            wrapped_text = "\n".join(simpleSplit(str(cell), 'Helvetica', 10, col_widths[i]))
+            wrapped_text = "\n".join(simpleSplit(str(cell), "Helvetica", 10, col_widths[i]))
             max_lines = max(max_lines, len(wrapped_text.split("\n")))
         row_heights.append(max_lines * 12)  # Zeilenhöhe basierend auf der Anzahl der Zeilen
 
     # Tabelle erstellen
     table = Table(table_data, colWidths=col_widths, rowHeights=row_heights, repeatRows=1)
-    table.setStyle(TableStyle([
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.black),
-        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-        ('BACKGROUND', (0, 0), (-1, 0), colors.lightskyblue),
-        ('WORDWRAP', (0, 0), (-1, -1), True),  # Textumbruch aktivieren
-    ]))
+    table.setStyle(
+        TableStyle(
+            [
+                ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
+                ("FONTNAME", (0, 0), (-1, -1), "Helvetica"),
+                ("FONTSIZE", (0, 0), (-1, -1), 10),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+                ("BACKGROUND", (0, 0), (-1, 0), colors.lightskyblue),
+                ("WORDWRAP", (0, 0), (-1, -1), True),  # Textumbruch aktivieren
+            ]
+        )
+    )
 
     # Funktion, um die Seitenzahl hinzuzufügen
     def on_page(canvas, doc):
@@ -223,7 +252,7 @@ def generiere_massnahmen(self, *args):
     # Footer hinzufügen
     footer = Paragraph(
         "Maßnahmenprotokoll - Generated with Protokoli der Protokollapp - Version 1.0 (2024) - © Alexander Rothe",
-        ParagraphStyle(name='Footer', alignment=1, fontSize=10)
+        ParagraphStyle(name="Footer", alignment=1, fontSize=10),
     )
     elements.append(Spacer(1, 20))
     elements.append(footer)
@@ -234,5 +263,3 @@ def generiere_massnahmen(self, *args):
         print(f"PDF erfolgreich erstellt: {filename}")
     except Exception as e:
         print(f"Fehler beim Erstellen des PDFs: {e}")
-
-

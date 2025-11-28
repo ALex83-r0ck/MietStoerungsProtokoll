@@ -1,9 +1,6 @@
-from kivy.lang import Builder
-from kivy.uix.relativelayout import RelativeLayout
 from kivy.properties import BooleanProperty
 from kivymd.uix.card import MDCard
-from kivymd.app import MDApp
-import os
+
 
 class MyDraggableCard(MDCard):
     """
@@ -15,7 +12,7 @@ class MyDraggableCard(MDCard):
     def __init__(self, **kwargs):
         """
         Initialize the draggable card with touch offset values.
-        
+
         Args:
             **kwargs: Additional keyword arguments.
         """
@@ -26,10 +23,10 @@ class MyDraggableCard(MDCard):
     def on_touch_down(self, touch):
         """
         Handle touch down event to start dragging the card if the touch is within the draggable area.
-        
+
         Args:
             touch: Touch event object.
-        
+
         Returns:
             bool: True if the touch event is consumed, False otherwise.
         """
@@ -43,10 +40,10 @@ class MyDraggableCard(MDCard):
     def on_touch_move(self, touch):
         """
         Handle touch move event to move the card if dragging is enabled.
-        
+
         Args:
             touch: Touch event object.
-        
+
         Returns:
             bool: True if the touch event is consumed, False otherwise.
         """
@@ -59,10 +56,10 @@ class MyDraggableCard(MDCard):
     def on_touch_up(self, touch):
         """
         Handle touch up event to stop dragging when touch is released.
-        
+
         Args:
             touch: Touch event object.
-        
+
         Returns:
             bool: True if the touch event is consumed, False otherwise.
         """
@@ -70,5 +67,3 @@ class MyDraggableCard(MDCard):
             self.dragging = False
             return True
         return super().on_touch_up(touch)
-    
-    

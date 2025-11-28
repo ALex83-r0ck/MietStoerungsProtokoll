@@ -4,25 +4,28 @@ Autor: Alexander Rothe
 STATUS: CLEAN | MINIMAL | PERFEKT | GOTT-MODUS
 """
 
-from typing import Optional
-from kivy.clock import Clock
-from kivy.properties import ObjectProperty
-from kivy.lang import Builder
-from kivymd.app import MDApp
-from kivymd.uix.snackbar import MDSnackbar
-from kivymd.uix.boxlayout import MDBoxLayout
-from database.database_setup import *
-from .widgets import MyDraggableCard
-from services.adapters.data_processing import get_all_data, generate_plots  # ← NEU: generate_plots!
-from services.adapters.pdf_generation import generiere_protokoll, generiere_massnahmen
-from datetime import datetime
-import re 
-import os
 import logging
-logging.getLogger('matplotlib.font_manager').disabled = True
-logging.getLogger('matplotlib').setLevel(logging.WARNING)
-logging.getLogger('kivy').setLevel(logging.WARNING)
-os.environ['KIVY_NO_CONSOLELOG'] = '1'
+import os
+import re
+from datetime import datetime
+from typing import Optional
+
+from database.database_setup import *
+from kivy.clock import Clock
+from kivy.lang import Builder
+from kivy.properties import ObjectProperty
+from kivymd.app import MDApp
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.snackbar import MDSnackbar
+from services.adapters.data_processing import generate_plots, get_all_data  # ← NEU: generate_plots!
+from services.adapters.pdf_generation import generiere_massnahmen, generiere_protokoll
+
+from .widgets import MyDraggableCard
+
+logging.getLogger("matplotlib.font_manager").disabled = True
+logging.getLogger("matplotlib").setLevel(logging.WARNING)
+logging.getLogger("kivy").setLevel(logging.WARNING)
+os.environ["KIVY_NO_CONSOLELOG"] = "1"
 import json
 
 # === KONFIGURATION ===
@@ -37,14 +40,16 @@ logging.basicConfig(
     level=logging.INFO,
     filename=CONFIG["paths"]["logs"],
     format="%(asctime)s - %(levelname)s - %(message)s",
-    encoding="utf-8"
+    encoding="utf-8",
 )
 
 os.makedirs(PLOT_FOLDER, exist_ok=True)
 
+
 class MyDraggableCard(MyDraggableCard):
     pass
-    
+
+
 class RootWidget(MDBoxLayout):
     plot_menu_button = ObjectProperty(None)
     chart_box = ObjectProperty(None)
@@ -85,7 +90,7 @@ class RootWidget(MDBoxLayout):
                 self.ende.text,
                 self.grund.text,
                 self.verursacher.text,
-                int(self.auswirkung.text)
+                int(self.auswirkung.text),
             )
             self.show_message("Daten gespeichert!")
             logging.info("Lärmdaten gespeichert")
@@ -140,20 +145,26 @@ class RootWidget(MDBoxLayout):
                 "02_histogramm_dauer.png",
                 "03_top_stoerungen.png",
                 "04_uhrzeiten.png",
-                "05_prognose.png"
+                "05_prognose.png",
             ]
             for f in plot_files:
                 path = os.path.join(PLOT_FOLDER, f)
                 if os.path.exists(path):
-                    items.append({
-                        "viewclass": "OneLineListItem",
-                        "text": f.split("_", 1)[1].replace(".png", "").replace("_", " ").title(),
-                        "on_release": lambda x=f: self.show_plot(x)
-                    })
+                    items.append(
+                        {
+                            "viewclass": "OneLineListItem",
+                            "text": f.split("_", 1)[1]
+                            .replace(".png", "")
+                            .replace("_", " ")
+                            .title(),
+                            "on_release": lambda x=f: self.show_plot(x),
+                        }
+                    )
         except Exception as e:
             logging.error(f"Plot-Menü Fehler: {e}")
 
         from kivymd.uix.menu import MDDropdownMenu
+
         self.menu = MDDropdownMenu(
             caller=self.ids.top_app_bar,
             items=items or [{"text": "Keine Plots verfügbar", "viewclass": "OneLineListItem"}],
@@ -168,6 +179,7 @@ class RootWidget(MDBoxLayout):
         try:
             self.chart_box.clear_widgets()
             from kivymd.uix.fitimage import FitImage
+
             self.chart_box.add_widget(FitImage(source=path, allow_stretch=True))
             self.show_message(f"{filename} geladen")
             logging.info(f"Plot geöffnet: {filename}")
@@ -225,33 +237,38 @@ class ProtokollApp(MDApp):
             self.root.speichere_massnahme(zeitraum, beschreibung, ergebnis)
 
     def analyse_haeufigkeit(self):
-        if not self.root: return
+        if not self.root:
+            return
         try:
             df = get_all_data()
             if df.empty:
                 self.root.show_message("Keine Daten")
                 return
-            top = df['verursacher'].mode()[0]
+            top = df["verursacher"].mode()[0]
             self.root.ids.haeufigster_verursacher.text = f"Häufigster: {top}"
         except Exception as e:
             self.root.show_message(f"Analyse fehlgeschlagen: {e}")
 
     def analyse_auswirkung(self):
-        if not self.root: return
+        if not self.root:
+            return
         try:
             df = get_all_data()
-            if df.empty: return
-            avg = df['auswirkung'].astype(float).mean()
+            if df.empty:
+                return
+            avg = df["auswirkung"].astype(float).mean()
             self.root.ids.durchschnittliche_auswirkung.text = f"Ø Auswirkung: {avg:.2f}"
         except Exception as e:
             self.root.show_message(f"Fehler: {e}")
 
     def analyse_dauer(self):
-        if not self.root: return
+        if not self.root:
+            return
         try:
             df = get_all_data()
-            if df.empty: return
-            avg = df['dauer'].mean()
+            if df.empty:
+                return
+            avg = df["dauer"].mean()
             self.root.ids.durchschnittliche_dauer.text = f"Ø Dauer: {avg:.1f} Min"
         except Exception as e:
             self.root.show_message(f"Fehler: {e}")

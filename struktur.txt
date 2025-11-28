@@ -1,52 +1,57 @@
 Protolkoli
->.gtihub/
-    >workflow
-        >ci.yml # CI/CD Pipeline rein, die Tests automatisch ausführt
-    >instructions/ # müssen wir so anpassen das es funktioniert und es auch die tests duchläuft
-        >snyk_rules.instructions.md 
->.venv/ # neu aufgesetzt mit python 3.13
->.vscode/
-    >settings.json # aktuell nur "python.analysis.autoImportCompletions": true" eingefügt
->app/
-    >assets/
-        >images/ # aktuell bilddatein sowie logo Designer.png eingefügt
-    >kv/
-        >protokoll.kv # enthaltet die GUI des Protokolls
-    >widgets/
-        >__init__.py # aktuell nur "from draggable_card import MyDraggableCard" eingefügt
-        >draggable_card.py # Selbstgebaute Karte, die sich beim touch bewegen kann
-    >main.py
->core/
-    >services/
-        >__init__.py # aktuell leer
-        >protokoll_service.py # enthaltet die Funktionen zum Protokoll
-        >data_processing.py # enthaltet die generirerung der Plots
-        >pdf_generation.py # enthaltet die generierung der PDFs
-    >adapters/
->data/
-    >logs/ # enthält die Log-Datei des Protokolls
-        >app.log # aktuell leer
-    >reports/ # werden die PDFs des Protokolls automatisch abgelegt 
-        >testplaceholder.pdf # platzhalter
->infrastructure/
-    >database/
-        >__init__.py # enthält __all__
-        >database_setup.py # enthaltet die Datenbankfunktionen
-        >migrations.py # ist aktuell leer
-        >protokoll.db # aktuell mit alten daten gefüllt
->scripts/
-    >__init__.py # aktuell leer
-    >update_backup.py # alte helferfunktion die mir ermöglichte auf einen fehler einzugehen aber die daten zu retten
-
->tests/
-    >__init__.py # aktuell leer
-    >test_protokoll.py # kleiner test zum erstellen eines test protokolls
->utils/
-    >__init__.py # aktuell services/adapters/data_processing.py und services/adapters/pdf_generation.py eingefügt
-    
->.gitignore # alles was ich nicht in meinem git haben will
->config.json # aktuell fokus auf version und author sowie auch apptitle
->kernfunktionenCheckliste.txt # enthält denn roten faden
->protokoll.py # enthaltet die Logik des Protokolls
->pyproject.toml # aktuell leer
->README.md # aktuell noch nicht fertig muss angepasst werden
+.gtihub/
+    workflow
+        ci.yml # CI/CD Pipeline rein, die Tests automatisch ausführt
+    instructions/ # müssen wir so anpassen das es funktioniert und es auch die tests duchläuft
+        snyk_rules.instructions.md 
+.venv/ # neu aufgesetzt mit python 3.13
+.vscode/
+    settings.json # aktuell nur "python.analysis.autoImportCompletions": true" eingefügt
+app/
+    assets/
+        images/ # aktuell bilddatein sowie logo Designer.png eingefügt
+    kv/
+        protokoll.kv # enthaltet die GUI des Protokolls
+    widgets/
+        __init__.py # aktuell nur "from draggable_card import MyDraggableCard" eingefügt
+        draggable_card.py # Selbstgebaute Karte, die sich beim touch bewegen kann
+    main_backup.py
+    main.py
+core/
+    services/
+        __init__.py # aktuell leer
+        protokoll_service.py # enthaltet die Funktionen zum Protokoll
+        data_processing.py # enthaltet die generirerung der Plots
+        pdf_generation.py # enthaltet die generierung der PDFs
+        statistics_service.py # enthaltet die Funktionen zur Statistik
+    adapters/
+data/
+    logs/ # enthält die Log-Datei des Protokolls
+        app.log # aktuell leer
+    reports/ # werden die PDFs des Protokolls automatisch abgelegt 
+        testplaceholder.pdf # platzhalter
+infrastructure/
+    database/
+        __init__.py # enthält __all__
+        database_setup.py # enthaltet die Datenbankfunktionen
+        migrations.py # ist aktuell leer
+        protokoll.db # aktuell mit alten daten gefüllt
+plots/  # werden die Plots des Protokolls automatisch abgelegt
+scripts/
+    __init__.py # aktuell leer
+    update_backup.py # alte helferfunktion die mir ermöglichte auf einen fehler einzugehen aber die daten zu retten
+tests/
+    __init__.py # aktuell leer
+    test_protokoll.py # kleiner test zum erstellen eines test protokolls
+utils/
+    __init__.py # leerer init
+    __pycache__/
+        data_processing.cpython-311.pyc 
+        pdf_generation.cpython-311.pyc
+.gitignore # alles was ich nicht in meinem git haben will
+config.json # aktuell fokus auf version und author sowie auch apptitle
+kernfunktionenCheckliste.txt # enthält denn roten faden
+pyproject.toml # aktuell leer
+README.md # aktuell noch nicht fertig muss angepasst werden
+requirements.txt
+struktur.txt # dieses Treeabbild
